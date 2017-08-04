@@ -12,7 +12,7 @@ class Main extends Component {
     return (
       <View>
         <Text>
-          {this.props.treeReducer.treeData.treeName} is now {this.this.props.treeReducer.treeData.currentTreeAge} years old :D
+          {this.props.treeReducer.treeData.treeName} is now {this.props.treeReducer.treeData.currentTreeAge} years old :D
         </Text>
         <Button
           title='Grow up'
