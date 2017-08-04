@@ -1,23 +1,55 @@
 import React, {Component} from 'react'
-import {Text} from 'react-native'
+import {
+  View,
+  Text,
+  TextInput,
+  Button
+} from 'react-native'
 import {connect} from 'react-redux'
+import {initTree} from '../actions/treeActions'
 
 class Welcome extends Component {
   constructor () {
     super()
     this.state = {
-      playerName: '',
-      treeName: '',
-      maxTreeAge: ''
+      toRedux: {
+        playerName: '',
+        treeName: '',
+        maxTreeAge: ''
+      }
     }
   }
 
   render () {
     return (
-      <Text>
-        Ini Welcome
-      </Text>
+      <View>
+        <Text>
+          Welcome!
+        </Text>
+        <TextInput placeholder='What your name? :D' value={this.state.toRedux.playerName} onChangeText={(text) => {
+          let oldState = this.state.toRedux
+          let newState = {...oldState, playerName: text}
+          this.setState({
+            toRedux: newState
+          })
+        }} />
+        <TextInput value={this.state.toRedux.treeName} onChangeText={(text) => {
+          let oldState = this.state.toRedux
+          let newState = {...oldState, treeName: text}
+          this.setState({
+            toRedux: newState
+          })
+        }} />
+        <Button onPress={() => {
+          this.submitInit(this.state.toRedux.playerName, this.state.toRedux.treeName)
+        }}
+          title='Submit' />
+      </View>
     )
+  }
+  submitInit (playerName, treeName) {
+    let maxTreeAge = Math.floor(Math.random() * 15)
+    this.props.initTree(playerName, treeName, maxTreeAge)
   }
 }
 
@@ -29,4 +61,12 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(Welcome)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    initTree: (playerName, treeName, maxTreeAge) => {
+      dispatch(initTree(playerName, treeName, maxTreeAge))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Welcome)
