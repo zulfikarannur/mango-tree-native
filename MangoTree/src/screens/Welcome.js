@@ -21,6 +21,7 @@ class Welcome extends Component {
   }
 
   render () {
+    const {navigate} = this.props.navigation
     return (
       <View>
         <Text>
@@ -42,6 +43,7 @@ class Welcome extends Component {
         }} />
         <Button onPress={() => {
           this.submitInit(this.state.toRedux.playerName, this.state.toRedux.treeName)
+          navigate('Main')
         }}
           title='Submit' />
       </View>
@@ -49,7 +51,8 @@ class Welcome extends Component {
   }
   submitInit (playerName, treeName) {
     let maxTreeAge = Math.floor(Math.random() * 15)
-    this.props.initTree(playerName, treeName, maxTreeAge)
+    let currentTreeAge = 0
+    this.props.initTree(playerName, treeName, maxTreeAge, currentTreeAge)
   }
 }
 
@@ -57,14 +60,15 @@ const mapStateToProps = (state) => {
   return {
     treeName: state.treeName,
     playerName: state.playerName,
-    maxTreeAge: state.maxTreeAge
+    maxTreeAge: state.maxTreeAge,
+    currentAge: state.currentTreeAge
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    initTree: (playerName, treeName, maxTreeAge) => {
-      dispatch(initTree(playerName, treeName, maxTreeAge))
+    initTree: (playerName, treeName, maxTreeAge, currentTreeAge) => {
+      dispatch(initTree(playerName, treeName, maxTreeAge, currentTreeAge))
     }
   }
 }

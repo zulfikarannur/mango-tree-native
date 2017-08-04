@@ -19,8 +19,13 @@ const treeReducer = (state = initialState, action) => {
         treeData: {
           playerName: action.payload.playerName,
           treeName: action.payload.treeName,
-          maxTreeAge: action.payload.maxTreeAge
+          maxTreeAge: action.payload.maxTreeAge,
+          currentTreeAge: action.payload.currentTreeAge
         }
+      }
+    case 'NEXT_YEAR':
+      return {
+        ...state.treeData, currentTreeAge: action.payload.currentTreeAge
       }
     default:
       return state

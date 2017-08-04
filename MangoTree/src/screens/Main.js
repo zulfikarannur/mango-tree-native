@@ -1,23 +1,32 @@
 import React, {Component} from 'react'
-import {Text} from 'react-native'
+import {
+  Text,
+  View,
+  Button
+} from 'react-native'
 import {connect} from 'react-redux'
+import {nextYear} from '../actions/treeActions'
 
 class Main extends Component {
-  // constructor () {
-  //   super()
-  //   this.state = {
-  //     playerName: '',
-  //     treeName: '',
-  //     maxTreeAge: ''
-  //   }
-  // }
-
   render () {
     return (
-      <Text>
-        Ini Main
-      </Text>
+      <View>
+        <Text>
+          {this.props.treeReducer.treeData.treeName} is now {this.this.props.treeReducer.treeData.currentTreeAge} years old :D
+        </Text>
+        <Button
+          title='Grow up'
+          onPress={() => {
+            this.nextYear()
+          }}
+         />
+      </View>
     )
+  }
+
+  nextYear () {
+    let newYear = this.props.treeReducer.treeData.currentTreeAge + 1
+    this.nextYear(newYear)
   }
 }
 
@@ -25,8 +34,16 @@ const mapStateToProps = (state) => {
   return {
     treeName: state.treeName,
     playerName: state.playerName,
-    maxTreeAge: state.maxTreeAge
+    maxTreeAge: state.maxTreeAge,
+    currentTreeAge: state.currentTreeAge
   }
 }
 
-export default connect(mapStateToProps)(Main)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    nextYear: (currentTreeAge) => {
+      dispatch(nextYear(nextYear))
+    }
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Main)
